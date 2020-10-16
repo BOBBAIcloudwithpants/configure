@@ -1,11 +1,9 @@
 package configure
 
 import (
-	"fmt"
 	"io/ioutil"
 	"os"
 	"time"
-	"log"
 )
 
 // 监听配置文件时触发的事件
@@ -13,35 +11,38 @@ type ListenFunc func(string)
 
 // 监听配置文件使用的结构定义
 type Watcher struct {
-	Done chan bool
-	listen ListenFunc
-	Filepath string
-	File *File
+	Done   chan bool  // 子进程是否已经完成的管道
+	Listen ListenFunc // 配置文件发生改变时
+	File   *File      // 存储 Watcher 监听的文件的相关信息和解析器
 }
-
-// 默认的 listen 函数，仅仅输出文件被修改的信息
-func defaultListen(filepath string) {
-	log.Println(fmt.Sprintf("file '%s' has been changed", filepath))
-}
-
 
 // 新建一个监听实体
-func NewWatcher(done chan bool, f *File) *Watcher {
+func newWatcher(done chan bool, f *File, listenFunc ListenFunc) *Watcher {
 	return &Watcher{
-		Done: done,
-		listen: defaultListen,
-		File: f,
+		Done:   done,
+		Listen: listenFunc,
+		File:   f,
+	}
+}
+
+func newWatcherWithOption(done chan bool, f *File, listenFunc ListenFunc, option Option) *Watcher {
+	f.parser.option = option
+	return &Watcher{
+		Done:   done,
+		Listen: listenFunc,
+		File:   f,
 	}
 }
 
 // 监控文件变化，如果配置文件不符合格式，则持续阻塞，否则，返回此时的正确格式解析出的配置文件的 key-value pair
-func (w *Watcher) Watch() {
+func (w *Watcher) watch() {
 	go func(doneChan chan bool) {
 		defer func() {
 			doneChan <- true
 		}()
-		for  {
+		for {
 			err := watchFile(w.File.Filename())
+			w.Listen(w.File.Filename())
 			// 此时说明文件已经发生了改变
 			if err != nil {
 				// 输出读取文件发生的错误，继续阻塞
@@ -62,7 +63,6 @@ func (w *Watcher) Watch() {
 					} else {
 						// 如果没有错误，说明文件格式正确，跳出循环
 						// 调用用户定义的listen函数，默认的listen函数仅仅打印一个日志
-						w.listen(w.File.Filename())
 						break
 					}
 				}

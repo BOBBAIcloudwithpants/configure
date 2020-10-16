@@ -84,24 +84,28 @@ package main
 
 import (
 	"fmt"
-	"github.com/bobbaicloudwithpants/configure"     // import 配置包
+	"gitee.com/baijiadong/service_computing/hw4/configure"
+	"log"
 )
+
+func defaultListen(filepath string) {
+	log.Println(fmt.Sprintf("file '%s' has been changed", filepath))
+}
 
 func main() {
 
-  // 假设当前目录下已经存在名为 test.txt 的配置文件，配置文件的内容与上面的 Example 相同
-	file, err := configure.Watch("test.txt")
+	file, err := configure.Watch("test.txt", defaultListen)
 	if err == nil {
-    // 输出：test.txt
-    fmt.Println(file.Filename())
-    
-    // 输出：http
-    fmt.Println(file.Section("server").Key("protocol").Val()) 
+		// 输出：test.txt
+		fmt.Println(file.Filename())
 
-    // 输出: possible values : production, development
-    // 这里，由于 'app_mode' 不属于任何分区，因此被解析到 default 分区中
-    // default 分区通过 file.Section("") 或者 filt.Section("default") 来获取
-    fmt.Println(file.Section("").Key("app_mode").Description())
+		// 输出：http
+		fmt.Println(file.Section("server").Key("protocol").Val())
+
+		// 输出: possible values : production, development
+		// 这里，由于 'app_mode' 不属于任何分区，因此被解析到 default 分区中
+		// default 分区通过 file.Section("") 或者 filt.Section("default") 来获取
+		fmt.Println(file.Section("").Key("app_mode").Description())
 	} else {
 		configure.LogError(err)
 	}
@@ -131,10 +135,14 @@ import (
 	"github.com/bobbaicloudwithpants/configure"     // import 配置包
 )
 
+func defaultListen(filepath string) {
+	log.Println(fmt.Sprintf("file '%s' has been changed", filepath))
+}
+
 func main() {
 
   // 假设当前目录下已经存在名为 test.txt 的配置文件，配置文件的内容与上面的 Example 相同
-	file, err := configure.Watch("test.txt")
+	file, err := configure.Watch("test.txt", defaultListen)
 	if err == nil {
     // 输出：test.txt
     fmt.Println(file.Filename())
