@@ -202,3 +202,22 @@ func TestWatchWithOption(t *testing.T)
 ```
 
 
+## 单元测试结果
+终端输入:       
+```
+go test -v
+```
+
+可得:      
+![](https://tva1.sinaimg.cn/large/007S8ZIlgy1gjs38gy7psj30q60pyn1x.jpg)
+
+## 功能测试结果
+终端输入:     
+```
+go test -bench=.
+```
+ 
+可得:     
+![](https://tva1.sinaimg.cn/large/007S8ZIlgy1gjs3adqhy3j30so08mabv.jpg)
+
+
