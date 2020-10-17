@@ -173,3 +173,37 @@ protocol = http
 2020/10/16 16:57:31 file 'test.txt' has been changed
 ```
 并且进程不再被阻塞。
+
+
+### 3. 自定义分割配置文件行的分隔符
+假设此时的目录下有一个文件名为 `example2.txt` ，内容为:
+```
+# possible values : production, development	app_mode = development		[paths]	# Path to where grafana can store temp files, sessions, and the sqlite3 db (if that is used)	data = /home/git/grafana		[server]	# Protocol (http or https)	protocol = http		# The http port  to use	http_port = 9999		# Redirect to correct domain if host header does not match domain	# Prevents DNS rebinding attacks	enforce_domain = true
+```
+那么通过下面的代码:
+```go
+package main
+
+import (
+	"fmt"
+	"github.com/bobbaicloudwithpants/configure"// import 配置包
+	"log"
+)
+
+func defaultListen(filepath string) {
+	log.Println(fmt.Sprintf("file '%s' has been changed", filepath))
+}
+
+func main() {
+
+// 将分隔符定义为 "\t"
+	file, err := configure.WatchWithOption("example2.txt", defaultListen, configure.Option{Separation: "\t"})
+	if err == nil {
+		// 输出：example2.txt
+		fmt.Println(file.Filename())
+	} else {
+		configure.LogError(err)
+	}
+}
+```
+同样能够正常解析配置项。

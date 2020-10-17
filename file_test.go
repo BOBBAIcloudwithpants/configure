@@ -1,7 +1,6 @@
 package configure
 
 import (
-	"fmt"
 	"testing"
 )
 
@@ -10,7 +9,6 @@ func TestFile_Key(t *testing.T) {
 	f = newFile(nil, "")
 	parser1.parse(f)
 	defaultSec := f.Section("")
-	fmt.Println(defaultSec.Name())
 	val := defaultSec.Key("key2")
 	r := val.Val()
 	expected := "1234adf"
@@ -19,7 +17,6 @@ func TestFile_Key(t *testing.T) {
 		t.Errorf("expected '%s' but got '%s'", expected, r)
 	}
 }
-
 
 func TestFile_NotFound(t *testing.T) {
 	var f *File
@@ -31,7 +28,3 @@ func TestFile_NotFound(t *testing.T) {
 		t.Errorf("expected error %s", err.Error())
 	}
 }
-
-
-
-

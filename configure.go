@@ -67,7 +67,7 @@ func WatchWithOption(filename string, listenFunc ListenFunc, option Option) (con
 		return nil, err
 	}
 
-	file := newFile(f, string(r))
+	file := newFileWithOpt(f, string(r), option)
 	err = file.Parse()
 	if err != nil {
 		LogError(err)

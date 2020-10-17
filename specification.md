@@ -187,3 +187,18 @@ func TestParser_ParseName(t *testing.T)
 ```go
 func TestParser_ParseNameNoDefault(t *testing.T)
 ```
+
+
+### Configure
+
+1. 测试 Watch 接口功能
+```go
+func TestWatch(t *testing.T) 
+```
+
+2. 测试 WatchWithOption 接口功能
+```go
+func TestWatchWithOption(t *testing.T)
+```
+
+
