@@ -3,6 +3,10 @@
 ## 简介
 Package `configure` 能够监控，读取符合格式的配置文件并转换为层次 <key, value> pair，在程序中被调用.
 
+## 设计报告和 API 文档链接
+设计报告: https://github.com/BOBBAIcloudwithpants/configure/blob/master/specification.md     
+API 文档: https://github.com/BOBBAIcloudwithpants/configure/wiki/Configure-API-Document
+
 ## 功能
 - 解析配置文件为配置对象
 - 从配置对象中读取配置项
