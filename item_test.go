@@ -27,4 +27,3 @@ func TestItem_Val(t *testing.T) {
 		t.Errorf("expected '%s' but got '%s'", expected, r)
 	}
 }
-

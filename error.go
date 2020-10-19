@@ -5,7 +5,6 @@ import (
 	"os"
 )
 
-
 // 两个自定义异常
 type ObjectNotFound struct {
 	Type string

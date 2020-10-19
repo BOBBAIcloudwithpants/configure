@@ -2,13 +2,13 @@ package configure
 
 import "testing"
 
-var contentWithDefault = []string{"# test1","key = 1", "# test2", "key2 = 2"}
+var contentWithDefault = []string{"# test1", "key = 1", "# test2", "key2 = 2"}
+
 //var contentWithoutDefault = []string{"[sec0]","# test1","key = 1","[sec1]","key2 = aaa","key3 = bbb","key4 = ccc","[sec2]","# desdes","key5=adsfeq1234"}
 var contentEmpty = []string{}
 
-
 func TestSection_Name(t *testing.T) {
-	testSection,_ := NewSection("test", nil, nil)
+	testSection, _ := NewSection("test", nil, nil)
 	r := testSection.Name()
 	expected := "test"
 	if r != expected {
@@ -17,7 +17,7 @@ func TestSection_Name(t *testing.T) {
 }
 
 func TestSection_ItemKeyVal(t *testing.T) {
-	testSection,_ := NewSection("test", contentWithDefault, nil)
+	testSection, _ := NewSection("test", contentWithDefault, nil)
 	len_r := len(testSection.items)
 
 	firstName := testSection.items[0].Name()
@@ -31,7 +31,7 @@ func TestSection_ItemKeyVal(t *testing.T) {
 }
 
 func TestSection_Description(t *testing.T) {
-	var testSection,_ = NewSection("test", contentWithDefault, nil)
+	var testSection, _ = NewSection("test", contentWithDefault, nil)
 	len_r := len(testSection.items)
 
 	firstName := testSection.items[1].Description()

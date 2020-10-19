@@ -6,19 +6,19 @@ import (
 
 // 配置项中的 key-value pair 的结构体定义
 type Item struct {
-	name string				// 这个配置项的名称
-	val string				// 配置项的值
-	description string		// 配置项的描述
-	section *Section		// 上一级的Section
+	name        string   // 这个配置项的名称
+	val         string   // 配置项的值
+	description string   // 配置项的描述
+	section     *Section // 上一级的Section
 }
 
 // 创建一个新的pair
 func newItem(section *Section, name string, val string, desp string) *Item {
 
 	return &Item{
-		section: section,
-		name: name,
-		val: val,
+		section:     section,
+		name:        name,
+		val:         val,
 		description: desp,
 	}
 }
@@ -48,9 +48,3 @@ func NewItem(section *Section, s string, description string) *Item {
 	spt := strings.Split(s, " = ")
 	return newItem(section, spt[0], spt[1], description)
 }
-
-
-
-
-
-

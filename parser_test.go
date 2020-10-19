@@ -2,8 +2,8 @@ package configure
 
 import "testing"
 
-var parser1 = newParser("# test\nkey1 = 123\nkey2 = 1234adf\n[sec1]\nkey3 = aad\nkey4 = aad",  newOption())
-var parser2 = newParser("[sec0]\n# test\nkey1 = 123\nkey2 = 1234adf\n[sec1]\nkey3 = aad\nkey4 = aad",  newOption())
+var parser1 = newParser("# test\nkey1 = 123\nkey2 = 1234adf\n[sec1]\nkey3 = aad\nkey4 = aad", newOption())
+var parser2 = newParser("[sec0]\n# test\nkey1 = 123\nkey2 = 1234adf\n[sec1]\nkey3 = aad\nkey4 = aad", newOption())
 
 func TestParser_ParseName(t *testing.T) {
 	var f *File
@@ -30,5 +30,3 @@ func TestParser_ParseNameNoDefault(t *testing.T) {
 		t.Errorf("expected '%s' but got '%s'", expected, defaultName)
 	}
 }
-
-
